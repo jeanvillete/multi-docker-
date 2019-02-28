@@ -1,0 +1,20 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t jvillete/multi-docker -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run jvillete/multi-docker npm test -- --coverage
+
+after_success:
+  - docker build -t jvillete/multi-client ./client
+  - docker build -t jvillete/multi-nginx ./nginx
+  - docker build -t jvillete/multi-server ./server
+  - docker build -t jvillete/multi-worker ./worker
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push jvillete/multi-client
+  - docker push jvillete/multi-nginx
+  - docker push jvillete/multi-server
+  - docker push jvillete/multi-worker
