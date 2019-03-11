@@ -15,8 +15,10 @@ class App extends Component {
             <p>
               Fib Calculator version 2
             </p>
-            <Link to="/">Home</Link>
-            <Link to="/otherpage">Other Page</Link>
+            <p>
+              <Link to="/" style={{ marginRight : '15px' }}>Home</Link>
+              <Link to="/otherpage">Other Page</Link>
+            </p>
           </header>
           <div>
             <Route exact path="/" component={ Fib } />
